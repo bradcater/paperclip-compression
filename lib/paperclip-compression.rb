@@ -6,6 +6,11 @@ module Paperclip
 
     attr_accessor :format
 
+    EXTRA_OPTIONS ||= {
+      'image/jpeg' => nil,
+      'image/png'  => nil
+    }
+    FORCE_FORMAT ||= nil
     def initialize(file, options = {}, attachment = nil)
       super
       @format         = options[:format]
@@ -22,10 +27,10 @@ module Paperclip
       dst_path = File.expand_path(dst.path)
 
       begin
-        if @attachment.content_type.eql?("image/jpeg")
-          Paperclip.run("jpegtran", "-copy none -optimize -perfect #{src_path} > #{dst_path}")
-        elsif @attachment.content_type.eql?("image/png")
-          Paperclip.run("optipng", "-o 5 #{src_path}")
+        if FORCE_FORMAT == 'image/jpeg' || (FORCE_FORMAT.nil? && @attachment.content_type.eql?("image/jpeg"))
+          Paperclip.run("jpegtran", "-copy none -optimize -perfect #{EXTRA_OPTIONS['image/jpeg'] || ''} #{src_path} > #{dst_path}")
+        elsif FORCE_FORMAT == 'image/png' || (FORCE_FORMAT.nil? && @attachment.content_type.eql?("image/png"))
+          Paperclip.run("optipng", "-o 5 #{EXTRA_OPTIONS['image/png'] || ''} #{src_path}")
           return src
         else
           return src
