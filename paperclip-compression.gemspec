@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.email       = "emrekutlu@gmail.com"
   s.files       = ["lib/paperclip-compression.rb"]
   s.homepage    = "http://github.com/dakick/paperclip-compression"
-  s.add_runtime_dependency "paperclip", ["~> 2.4"]
+  s.add_runtime_dependency "paperclip", [">= 2.4"]
   s.requirements << "jpegtran for JPEG compression"
   s.requirements << "optipng for PNG compression"
 end
