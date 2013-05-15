@@ -28,9 +28,9 @@ module Paperclip
 
       begin
         if FORCE_FORMAT == 'image/jpeg' || (FORCE_FORMAT.nil? && @attachment.content_type.eql?("image/jpeg"))
-          Paperclip.run("jpegtran", "#{EXTRA_OPTIONS['image/jpeg']} #{src_path} > #{dst_path}")
+          Paperclip.run("jpegtran", "#{EXTRA_OPTIONS['image/jpeg']} \"#{src_path}\" > \"#{dst_path}\"")
         elsif FORCE_FORMAT == 'image/png' || (FORCE_FORMAT.nil? && @attachment.content_type.eql?("image/png"))
-          Paperclip.run("optipng", "#{EXTRA_OPTIONS['image/png']} #{src_path}")
+          Paperclip.run("optipng", "#{EXTRA_OPTIONS['image/png']} \"#{src_path}\"")
           return src
         else
           return src
